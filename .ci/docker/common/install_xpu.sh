@@ -56,6 +56,9 @@ function install_ubuntu() {
     fi
 
     # Install Intel Support Packages
+    if [[ "$XPU_VERSION" == "2025.0" ]]; then
+        XPU_PACKAGES="${XPU_PACKAGES} intel-oneapi-dnnl=2025.0.1-6"
+    fi
     apt-get install -y ${XPU_PACKAGES}
 
     # Cleanup
@@ -91,6 +94,9 @@ gpgkey=https://yum.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.
 EOF
 
     # Install Intel Support Packages
+    if [[ "$XPU_VERSION" == "2025.0" ]]; then
+        XPU_PACKAGES="${XPU_PACKAGES} intel-oneapi-dnnl-2025.0.1-6"
+    fi
     yum install -y ${XPU_PACKAGES}
     # The xpu-smi packages
     dnf install -y xpu-smi

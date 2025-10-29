@@ -11,6 +11,7 @@
 #include <chrono>
 #include <cmath>
 #include <mutex>
+#include <optional>
 #include <vector>
 
 #include <ATen/core/TensorBody.h>
@@ -95,7 +96,7 @@ inline bool hasCUDATensor(const c10::IValue& val, const size_t maxArrayLen = 409
   }
 }
 
-inline c10::optional<std::string> jsonIValue(
+inline std::optional<std::string> jsonIValue(
   const c10::IValue& val,
   const size_t maxArrayLen = 4096) {
   if (val.isTensor()) {
@@ -111,7 +112,7 @@ inline c10::optional<std::string> jsonIValue(
         "\"device\":", "\"", device, "\"",
       "}");
     } else {
-      return c10::nullopt;
+      return std::nullopt;
     }
   } else if (val.isTuple()) {
     std::vector<std::string> element_jsons;
@@ -190,7 +191,7 @@ inline c10::optional<std::string> jsonIValue(
       "\"value\":", "\"", deviceStr(val.toDevice()), "\"",
     "}");
   }
-  return c10::nullopt;
+  return std::nullopt;
 }
 
 inline std::string jsonStream(cudaStream_t stream) {
